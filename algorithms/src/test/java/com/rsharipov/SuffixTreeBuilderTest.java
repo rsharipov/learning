@@ -45,6 +45,37 @@ public class SuffixTreeBuilderTest {
         }
     }
     
+    public String generateString(int size) {
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < size; ++i) {
+            builder.append((char)('a' + (i % ('z' - 'a'))));
+        }
+        return builder.toString();
+    }
+    
+    public long getTimeSpentOnSuffixTree(int size) {
+        String line = generateString(1000);
+        SuffixTreeBuilder instance = new SuffixTreeBuilder();        
+        long start = System.nanoTime();
+        instance.build(line);
+        return System.nanoTime() - start;        
+    }
+    
+    @Test
+    public void testSuffixTreeIsBuiltInLinearTime() {
+        long timeFor1000 = getTimeSpentOnSuffixTree(1000);
+        long timeFor5000 = getTimeSpentOnSuffixTree(5000);
+        // a * N + b = Time
+        double a = (double)(timeFor5000 - timeFor1000) / (5000 - 1000);
+        double b = timeFor1000 - a * 1000;
+        
+        double expectedFor3000 = a * 3000 + b;
+        assertEquals(expectedFor3000, getTimeSpentOnSuffixTree(3000), expectedFor3000 / 100 * 5);
+        
+        double expectedFor10000 = a * 10000 + b;
+        assertEquals(expectedFor10000, getTimeSpentOnSuffixTree(10000), expectedFor10000 / 100 * 5);
+    }
+    
     @Test
     public void testNode() {
         Node parent = new Node(2, 3, null);

@@ -177,6 +177,10 @@ public class SuffixTreeBuilder {
             activeEdgeStart = '\0';
         }
         
+        public void goDownFromRoot(int start, int end) {
+            goDown(start, end);
+        }
+        
         public void addCharacter(int characterBeingAddedIndex) {            
             ++remainder;
             Node previouslyAdded = null;
@@ -202,7 +206,7 @@ public class SuffixTreeBuilder {
                 }
                 else {
                     activeNode = root;
-                    goDown(characterBeingAddedIndex - remainder + 1 + 1, characterBeingAddedIndex  - 1);
+                    goDownFromRoot(characterBeingAddedIndex - remainder + 1 + 1, characterBeingAddedIndex  - 1);
                 }
                 --remainder;
             }            
