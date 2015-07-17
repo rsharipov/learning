@@ -80,12 +80,32 @@ public class SuffixTreeBuilderTest {
             .addChild('C', new Node(6, 8, null))
             .addChild('$', new Node(8, 8, null));
         assertNodeEquals(expected, actual);
-            
+    }
+    
+    @Test
+    public void testBuildForbookkepper() {
+        SuffixTreeBuilder instance = new SuffixTreeBuilder();
+        Node actual = instance.build("bookkeeper", new NullVisualizer());
+        Node expected = new Node(-1, -1, null)
+            .addChild('b', new Node(0, 9, null))
+            .addChild('k', new Node(3, 3, null)
+                    .addChild('e', new Node(5, 9, null))
+                    .addChild('k', new Node(4, 9, null)))
+            .addChild('o', new Node(1, 1, null)
+                .addChild('o', new Node(2, 9, null))
+                .addChild('k', new Node(3, 9, null)))
+            .addChild('e', new Node(5, 5, null)
+                .addChild('e', new Node(6, 9, null))
+                .addChild('p', new Node(7, 9, null))
+                .addChild('r', new Node(9, 9, null)))
+            .addChild('r', new Node(9, 9, null))
+            .addChild('p', new Node(7, 9, null));
+        assertNodeEquals(expected, actual);
     }
     
     public static void main(String[] args) {
         SuffixTreeBuilder instance = new SuffixTreeBuilder();
-        String line = "GATAGACA$";        
+        String line = "bookkeeper";        
         final JFrame frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setSize(1000, 1000);
