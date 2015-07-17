@@ -1,8 +1,6 @@
 
 package com.rsharipov;
 
-import com.rsharipov.SuffixTreeBuilder;
-import com.rsharipov.SuffixTreeBuilder;
 import com.rsharipov.SuffixTreeBuilder.Node;
 import java.io.BufferedInputStream;
 import java.io.InputStream;

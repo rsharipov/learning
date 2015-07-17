@@ -1,7 +1,7 @@
 package com.rsharipov;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 public class SuffixTreeBuilder {
 
@@ -17,7 +17,7 @@ public class SuffixTreeBuilder {
             this.leftBoundInclusive = leftBoundInclusive;
             this.rightBoundInclusive = rightBoundInclusive;
             this.parent = parent;
-            this.children = new HashMap<>();
+            this.children = new TreeMap<>();
             this.suffixLink = null;
         }
 
@@ -68,7 +68,7 @@ public class SuffixTreeBuilder {
         }
         
         public Map<Character, Node> getChildren() {
-            return new HashMap<>(children);
+            return children;
         }
         
         public boolean hasChild(char ch) {
