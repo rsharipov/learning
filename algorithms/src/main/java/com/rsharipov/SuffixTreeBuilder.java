@@ -181,16 +181,19 @@ public class SuffixTreeBuilder {
             ++remainder;
             Node previouslyAdded = null;
             while (remainder > 0) {
-                String suffixBeingAdded = line.substring(characterBeingAddedIndex - remainder + 1, characterBeingAddedIndex + 1);                
                 if (canGo(line.charAt(characterBeingAddedIndex))) {
                     goDown(characterBeingAddedIndex, characterBeingAddedIndex);
                     return;
                 }
-                if (split()) {
-                    if (previouslyAdded != null) {
-                        previouslyAdded.setSuffixLink(activeNode);
-                        previouslyAdded = activeNode;
-                    }
+                final boolean wasSplit = split();
+                if (previouslyAdded != null) {
+                    previouslyAdded.setSuffixLink(activeNode);                    
+                }
+                if (wasSplit) {
+                    previouslyAdded = activeNode;
+                }
+                else {
+                    previouslyAdded = null;
                 }
                 Node newLeaf = new Node(characterBeingAddedIndex, line.length() - 1, activeNode);
                 activeNode.addChild(line.charAt(characterBeingAddedIndex), newLeaf);
@@ -214,19 +217,5 @@ public class SuffixTreeBuilder {
             visualizer.visualize(characterBeingAdded, line, root);
         }
         return root;
-    }    
-
-    private Node createFake(final Node root) {
-        Node fake = new Node(-1, -1, null) {
-            @Override
-            public boolean hasChild(char ch) {
-                return true;
-            }
-            @Override
-            public Node getChild(char ch) {
-                return root;
-            }
-        };
-        return fake;
-    }    
+    }
 }

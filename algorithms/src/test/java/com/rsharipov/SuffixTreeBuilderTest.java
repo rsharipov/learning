@@ -67,11 +67,12 @@ public class SuffixTreeBuilderTest {
     public void testBuildForGatagaca$() {
         SuffixTreeBuilder instance = new SuffixTreeBuilder();
         Node actual = instance.build("GATAGACA$", new NullVisualizer());
-        Node expected = new Node(-1, -1, null)
-            .addChild('G', new Node(0, 1, null)
+        Node gChild, aChild;
+        Node expected = new Node(-1, -1, null)                
+            .addChild('G', gChild = new Node(0, 1, null)
                     .addChild('T', new Node(2, 8, null))
                     .addChild('C', new Node(6, 8, null)))
-            .addChild('A', new Node(1, 1, null)
+            .addChild('A', aChild = new Node(1, 1, null)
                     .addChild('G', new Node(4, 8, null))
                     .addChild('T', new Node(2, 8, null))
                     .addChild('C', new Node(6, 8, null))
@@ -79,6 +80,7 @@ public class SuffixTreeBuilderTest {
             .addChild('T', new Node(2, 8, null))
             .addChild('C', new Node(6, 8, null))
             .addChild('$', new Node(8, 8, null));
+        gChild.setSuffixLink(aChild);
         assertNodeEquals(expected, actual);
     }
     
@@ -86,26 +88,50 @@ public class SuffixTreeBuilderTest {
     public void testBuildForbookkepper() {
         SuffixTreeBuilder instance = new SuffixTreeBuilder();
         Node actual = instance.build("bookkeeper", new NullVisualizer());
+        Node eChild, kChild, oChild;
         Node expected = new Node(-1, -1, null)
             .addChild('b', new Node(0, 9, null))
-            .addChild('k', new Node(3, 3, null)
+            .addChild('k', kChild = new Node(3, 3, null)
                     .addChild('e', new Node(5, 9, null))
                     .addChild('k', new Node(4, 9, null)))
-            .addChild('o', new Node(1, 1, null)
+            .addChild('o', oChild = new Node(1, 1, null)
                 .addChild('o', new Node(2, 9, null))
                 .addChild('k', new Node(3, 9, null)))
-            .addChild('e', new Node(5, 5, null)
+            .addChild('e', eChild = new Node(5, 5, null)
                 .addChild('e', new Node(6, 9, null))
                 .addChild('p', new Node(7, 9, null))
                 .addChild('r', new Node(9, 9, null)))
             .addChild('r', new Node(9, 9, null))
             .addChild('p', new Node(7, 9, null));
+        eChild.setSuffixLink(expected);
+        kChild.setSuffixLink(expected);
+        oChild.setSuffixLink(expected);
+        assertNodeEquals(expected, actual);
+    }
+    
+    @Test
+    public void testBuildGoogol$() {
+        SuffixTreeBuilder instance = new SuffixTreeBuilder();
+        Node actual = instance.build("googol$", new NullVisualizer());
+        Node expected = new Node(-1, -1, null)
+            .addChild('l', new Node(5, 6, null))
+            .addChild('$', new Node(6, 6, null));
+        Node goChild = new Node(0, 1, null)
+            .addChild('o', new Node(2, 6, null))
+            .addChild('l', new Node(5, 6, null));
+        Node oChild = new Node(1, 1, null)
+            .addChild('g', new Node(3, 6, null))
+            .addChild('o', new Node(2, 6, null))
+            .addChild('l', new Node(5, 6, null));
+        goChild.setSuffixLink(oChild);
+        expected.addChild('g', goChild);
+        expected.addChild('o', oChild);
         assertNodeEquals(expected, actual);
     }
     
     public static void main(String[] args) {
         SuffixTreeBuilder instance = new SuffixTreeBuilder();
-        String line = "bookkeeper";        
+        String line = "googol$";        
         final JFrame frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setSize(1000, 1000);
