@@ -66,7 +66,7 @@ public class SuffixTreeBuilderTest {
     @Test
     public void testBuildForGatagaca$() {
         SuffixTreeBuilder instance = new SuffixTreeBuilder();
-        Node actual = instance.build("GATAGACA$", new NullVisualizer());
+        Node actual = instance.build("GATAGACA$", new SuffixTreeBuilder.NullVisualizer());
         Node gChild, aChild;
         Node expected = new Node(-1, -1, null)                
             .addChild('G', gChild = new Node(0, 1, null)
@@ -87,7 +87,7 @@ public class SuffixTreeBuilderTest {
     @Test
     public void testBuildForbookkepper() {
         SuffixTreeBuilder instance = new SuffixTreeBuilder();
-        Node actual = instance.build("bookkeeper", new NullVisualizer());
+        Node actual = instance.build("bookkeeper", new SuffixTreeBuilder.NullVisualizer());
         Node eChild, kChild, oChild;
         Node expected = new Node(-1, -1, null)
             .addChild('b', new Node(0, 9, null))
@@ -112,7 +112,7 @@ public class SuffixTreeBuilderTest {
     @Test
     public void testBuildGoogol$() {
         SuffixTreeBuilder instance = new SuffixTreeBuilder();
-        Node actual = instance.build("googol$", new NullVisualizer());
+        Node actual = instance.build("googol$", new SuffixTreeBuilder.NullVisualizer());
         Node expected = new Node(-1, -1, null)
             .addChild('l', new Node(5, 6, null))
             .addChild('$', new Node(6, 6, null));
@@ -129,9 +129,30 @@ public class SuffixTreeBuilderTest {
         assertNodeEquals(expected, actual);
     }
     
+    public int howManyEntries(String line, String needle) {
+        SuffixTreeBuilder instance = new SuffixTreeBuilder();
+        return instance.howManyEntries(instance.build(line, new SuffixTreeBuilder.NullVisualizer()), line, needle);
+    }
+    
+    @Test
+    public void testHowManyEntries() {
+        assertEquals(7, howManyEntries("2222222$", "2"));
+        assertEquals(3, howManyEntries("aababacaaaba$", "ab"));
+        assertEquals(3, howManyEntries("aababacaaaba$", "aba"));
+        assertEquals(1, howManyEntries("aababacaaaba$", "ac"));
+        assertEquals(8, howManyEntries("aababacaaaba$", "a"));
+        assertEquals(1, howManyEntries("aababacaaaba$", "aababacaaaba"));
+        assertEquals(6, howManyEntries("aababcabcdabcdeabcdef$", "a"));
+        assertEquals(5, howManyEntries("aababcabcdabcdeabcdef$", "ab"));
+        assertEquals(4, howManyEntries("aababcabcdabcdeabcdef$", "abc"));
+        assertEquals(3, howManyEntries("aababcabcdabcdeabcdef$", "abcd"));
+        assertEquals(2, howManyEntries("aababcabcdabcdeabcdef$", "abcde"));
+        assertEquals(1, howManyEntries("aababcabcdabcdeabcdef$", "abcdef"));
+    }
+    
     public static void main(String[] args) {
         SuffixTreeBuilder instance = new SuffixTreeBuilder();
-        String line = "googol$";        
+        String line = "2222222$";        
         final JFrame frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setSize(1000, 1000);
@@ -140,7 +161,7 @@ public class SuffixTreeBuilderTest {
         frame.getContentPane().add(tabbedPane, BorderLayout.CENTER);
         frame.setVisible(true);
         
-        instance.build(line, new SuffixTreeBuildingVisualizer() {
+        instance.build(line, new SuffixTreeBuilder.SuffixTreeBuildingVisualizer() {
             @Override
             public void visualize(int step, String line, SuffixTreeBuilder.Node node) {
                 SuffixTreeVisualizer visualizer = new SuffixTreeVisualizer();

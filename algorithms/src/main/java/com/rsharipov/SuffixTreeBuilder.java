@@ -209,6 +209,70 @@ public class SuffixTreeBuilder {
         }
     }
     
+    public class Position {
+        private final Node node;
+        private final int position;
+        public Position(Node node, int position) {
+            this.node = node;
+            this.position = position;
+        }
+        public Node getNode() {
+            return node;
+        }
+        public int getPosition() {
+            return position;
+        }
+    }
+    
+    public Position traverse(Node textTreeRoot, String line, String needle) {
+        Node current = textTreeRoot;
+        while (!needle.isEmpty()) {
+            if (!current.hasChild(needle.charAt(0))) {
+                return null;
+            }
+            current = current.getChild(needle.charAt(0));
+            String edgeLabel = line.substring(current.getLeftBoundInclusive(), current.getRightBoundInclusive() + 1);
+            if (edgeLabel.length() < needle.length()) {
+                if (!needle.startsWith(edgeLabel)) {
+                    return null;
+                }
+                needle = needle.substring(edgeLabel.length());
+            }        
+            else {
+                if (!edgeLabel.startsWith(needle)) {
+                    return null;
+                }
+                return new Position(current, needle.length());
+            }
+        }
+        return new Position(current, 0);
+    }
+    
+    public int howManyEntries(Node textTreeRoot, String line, String needle) {
+        Position position = traverse(textTreeRoot, line, needle);
+        if (position == null) return 0;
+        return howManyLeafsFrom(position.getNode());
+    }
+    
+    public int howManyLeafsFrom(Node node) {
+        if (node.getChildren().isEmpty()) return 1;
+        int result = 0;
+        for (Node child : node.getChildren().values()) {
+            result += howManyLeafsFrom(child);
+        }
+        return result;
+    }
+    
+    public static interface SuffixTreeBuildingVisualizer {
+        public void visualize(int step, String line, SuffixTreeBuilder.Node node);
+    }
+    
+    public static class NullVisualizer implements SuffixTreeBuildingVisualizer {
+        @Override
+        public void visualize(int step, String line, SuffixTreeBuilder.Node node) {        
+        }
+    }
+    
     public Node build(String line, SuffixTreeBuildingVisualizer visualizer) {
         final Node root = new Node(-1, -1, null);
         BuildContext context = new BuildContext(root, line);
@@ -217,5 +281,9 @@ public class SuffixTreeBuilder {
             visualizer.visualize(characterBeingAdded, line, root);
         }
         return root;
+    }
+    
+    public Node build(String line) {
+        return build(line, new NullVisualizer());
     }
 }
