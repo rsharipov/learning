@@ -59,7 +59,6 @@ public class ReverseShuffleMerge {
                 if (counts[ch] > 0) {
                     int index = line.lastIndexOf((char)('a' + ch), end - 1);
                     if (index > -1 && index >= start - 1) {
-                        System.out.println("Adding " + index);
                         result.append((char)(ch + 'a'));
                         --counts[ch];
                         end = index;

@@ -2,6 +2,7 @@ package com.rsharipov.tasks.hackerrank;
 
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.Ignore;
 
 public class ReverseShuffleMergeTest {
     
@@ -56,6 +57,7 @@ public class ReverseShuffleMergeTest {
      * Test of solve method, of class ReverseShuffleMerge.
      */
     @Test
+    @Ignore
     public void testSolveBigLine() {
         String line = "bdabaceadaedaaaeaecdeadababdbeaeeacacaba";
         ReverseShuffleMerge instance = new ReverseShuffleMerge();

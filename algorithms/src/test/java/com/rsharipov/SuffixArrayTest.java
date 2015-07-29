@@ -17,7 +17,7 @@ public class SuffixArrayTest {
     public void testSuffixArrayPerformance() throws IOException {
         long start = System.nanoTime();
         MorganAndAString.solve(MorganAndAString.class.getResourceAsStream("Morgan_slow.TXT"), new FileOutputStream("output"));
-        assertThat((System.nanoTime() - start) / 1000000000.0, lessThan(3.0));
+        assertThat((System.nanoTime() - start) / 1000000000.0, lessThan(4.0));
     }
     
     @Test
