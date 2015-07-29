@@ -39,14 +39,8 @@ public class APointOverlappingTheMostIntervalsFinderTest {
         }
     }
     
-    private int countContaining(List<Interval> intervals, int point) {
-        int count = 0;
-        for (Interval i : intervals) {
-            if (i.contains(point)) {
-                ++count;
-            }
-        }
-        return count;
+    private long countContaining(List<Interval> intervals, int point) {
+        return intervals.stream().filter((i) -> (i.contains(point))).count();
     }
     
     @Test
