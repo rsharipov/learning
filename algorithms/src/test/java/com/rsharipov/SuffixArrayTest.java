@@ -1,25 +1,13 @@
 package com.rsharipov;
 
-import com.rsharipov.tasks.hackerrank.MorganAndAString;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import static org.hamcrest.Matchers.lessThan;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
 import org.junit.Test;
 
 public class SuffixArrayTest {
 
-    @Test
-    public void testSuffixArrayPerformance() throws IOException {
-        long start = System.nanoTime();
-        MorganAndAString.solve(MorganAndAString.class.getResourceAsStream("Morgan_slow.TXT"), new FileOutputStream("output"));
-        assertThat((System.nanoTime() - start) / 1000000000.0, lessThan(4.0));
-    }
-    
     @Test
     public void testSuffixArray() {
         test("abc");
