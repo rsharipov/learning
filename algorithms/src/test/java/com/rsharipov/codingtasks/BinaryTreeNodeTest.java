@@ -51,5 +51,53 @@ public class BinaryTreeNodeTest {
     public void testDataReturnsWhatHasBeenSpecifiedInConstructor() {
         assertEquals("abc", new BinaryTreeNode("abc", null, null).data());
     }
+
+    @Test
+    public void testHeightOfOneElementTreeIsOne() {
+        assertEquals(1, new BinaryTreeNode("A", null, null).height());
+    }
+
+    @Test
+    public void testHeightOfTwoElementTreeIsTwo() {
+        assertEquals(2, new BinaryTreeNode("A", new BinaryTreeNode("B"), null).height());
+    }
     
+    @Test
+    public void testHeightOfThreeLevelTreeIsThree() {
+        assertEquals(3, new BinaryTreeNode("A", 
+            new BinaryTreeNode("B"), 
+            new BinaryTreeNode("C", 
+                new BinaryTreeNode("D"), 
+                new BinaryTreeNode("E"))).height());
+    }
+    
+    @Test
+    public void testOneElementTreeIsBalanced() {
+        assertEquals(true, new BinaryTreeNode("A", null, null).balanced());
+    }
+
+    @Test
+    public void testTwoElementsTreeIsBalanced() {
+        assertEquals(true, new BinaryTreeNode("A", new BinaryTreeNode("B"), null).balanced());
+    }
+    
+    @Test
+    public void testThreeLevelTreeMightBeUnbalanced() {
+        assertEquals(false, new BinaryTreeNode("A", 
+            null, 
+            new BinaryTreeNode("C", 
+                new BinaryTreeNode("D"), 
+                new BinaryTreeNode("E"))).balanced());
+    }
+    
+    @Test
+    public void testThreeLevelTreeMightBeBalanced() {
+        assertEquals(true, new BinaryTreeNode("A", 
+            new BinaryTreeNode("B"), 
+            new BinaryTreeNode("C", 
+                new BinaryTreeNode("D"), 
+                new BinaryTreeNode("E"))).balanced());
+    }
+
+
 }

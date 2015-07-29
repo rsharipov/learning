@@ -7,11 +7,31 @@ public class BinaryTreeNode <T> {
     private final T data;
     private final BinaryTreeNode left;
     private final BinaryTreeNode right;
+    private final int height;
     
     public BinaryTreeNode(T data, BinaryTreeNode left, BinaryTreeNode right) {
         this.data = data;
         this.left = left;
         this.right = right;
+        this.height = 1 + Math.max(
+            left == null ? 0 : left.height,
+            right == null ? 0 : right.height);
+    }
+
+    BinaryTreeNode(T data) {
+        this(data, null, null);
+    }
+    
+    public int height() {
+        return height;
+    }
+    
+    public boolean balanced() {
+        int leftHeight = left == null ? 0 : left.height;
+        int rightHeight = right == null ? 0 : right.height;
+        return Math.abs(leftHeight - rightHeight) <= 1 &&
+            (left == null || left.balanced()) &&
+            (right == null || right.balanced());
     }
     
     public BinaryTreeNode left() {
