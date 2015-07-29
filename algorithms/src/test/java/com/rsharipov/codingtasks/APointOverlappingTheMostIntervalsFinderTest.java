@@ -35,7 +35,10 @@ public class APointOverlappingTheMostIntervalsFinderTest {
             List<Interval> intervals = generateRandom(1000);
             assertEquals(
                 countContaining(intervals, finder.findAPointOverlappingTheMostIntervalsInQuadraticTime(intervals)),
-                countContaining(intervals, finder.findAPointOverlappingTheMostIntervalsInLogarithmicTime(intervals)));
+                countContaining(intervals, finder.findAPointOverlappingTheMostIntervalsInLinearithmicTime(intervals)));
+            assertEquals(
+                countContaining(intervals, finder.findAPointOverlappingTheMostIntervalsInQuadraticTime(intervals)),
+                countContaining(intervals, finder.findAPointOverlappingTheMostIntervalsWithPriorityQueue(intervals)));
         }
     }
     
@@ -56,7 +59,7 @@ public class APointOverlappingTheMostIntervalsFinderTest {
         APointOverlappingTheMostIntervalsFinder finder = new APointOverlappingTheMostIntervalsFinder();
         List<Interval> intervals = generateRandom(size);
         long start = System.nanoTime();
-        finder.findAPointOverlappingTheMostIntervalsInLogarithmicTime(intervals);
+        finder.findAPointOverlappingTheMostIntervalsInLinearithmicTime(intervals);
         return System.nanoTime() - start;
     }
     
