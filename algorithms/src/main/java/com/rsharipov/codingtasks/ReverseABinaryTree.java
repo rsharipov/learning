@@ -2,9 +2,9 @@ package com.rsharipov.codingtasks;
 
 public class ReverseABinaryTree {
 
-    public BinaryTreeNode reverse(BinaryTreeNode root) {
+    public <T> BinaryTreeNode<T> reverse(BinaryTreeNode<T> root) {
         if (root == null) return null;
-        return new BinaryTreeNode(root.data(), reverse(root.right()), reverse(root.left()));
+        return new BinaryTreeNode<T>(root.data(), reverse(root.right()), reverse(root.left()));
     }
     
 }

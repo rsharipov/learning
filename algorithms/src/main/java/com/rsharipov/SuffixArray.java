@@ -46,7 +46,8 @@ public class SuffixArray {
      * Builds the suffix array for @input in O(N * log(N))
      * @param input 
      */
-    public SuffixArray(String input, int minChar, int maxChar) {
+    @SuppressWarnings("unchecked")
+    public SuffixArray(String input, int minChar, int maxChar) {        
         countingSortBuckets = new List[input.length()];
         for (int i = 0; i < input.length(); ++i) {
             countingSortBuckets[i] = new LinkedList<>();

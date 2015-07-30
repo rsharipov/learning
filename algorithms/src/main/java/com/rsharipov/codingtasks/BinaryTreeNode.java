@@ -5,11 +5,11 @@ import java.util.Objects;
 public class BinaryTreeNode <T> {
 
     private final T data;
-    private final BinaryTreeNode left;
-    private final BinaryTreeNode right;
+    private final BinaryTreeNode<T> left;
+    private final BinaryTreeNode<T> right;
     private final int height;
     
-    public BinaryTreeNode(T data, BinaryTreeNode left, BinaryTreeNode right) {
+    public BinaryTreeNode(T data, BinaryTreeNode<T> left, BinaryTreeNode<T> right) {
         this.data = data;
         this.left = left;
         this.right = right;
@@ -34,11 +34,11 @@ public class BinaryTreeNode <T> {
             (right == null || right.balanced());
     }
     
-    public BinaryTreeNode left() {
+    public BinaryTreeNode<T> left() {
         return left;
     }
     
-    public BinaryTreeNode right() {
+    public BinaryTreeNode<T> right() {
         return right;
     }
 
@@ -47,6 +47,7 @@ public class BinaryTreeNode <T> {
         if (!(obj instanceof BinaryTreeNode)) {
             return false;
         }
+        @SuppressWarnings("unchecked")
         BinaryTreeNode<T> other = (BinaryTreeNode<T>) obj;
         return
             Objects.equals(data(), other.data()) &&
