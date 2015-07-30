@@ -30,7 +30,6 @@ public class ShuffleArrayTest {
         final double THRESHOLD = 0.05;
         final double EXPECTED = (double)ROUNDS / SIZE;
         for (int i = 0; i < SIZE; ++i) {
-            System.out.println(Arrays.toString(count[i]));
             for (int j = 0; j < SIZE; ++j) {
                 assertEquals(EXPECTED, (double)count[i][j], EXPECTED * THRESHOLD);
             }            

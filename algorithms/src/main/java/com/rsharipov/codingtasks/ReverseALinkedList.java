@@ -6,9 +6,9 @@ public class ReverseALinkedList {
 
     public <T> SimpleLinkedList<T> reverseIteratively(SimpleLinkedList<T> list) {
         if (list.next() == null) return list;
-        SimpleLinkedList prevPrev = null;
-        SimpleLinkedList prev = list;
-        SimpleLinkedList current = prev.next();
+        SimpleLinkedList<T> prevPrev = null;
+        SimpleLinkedList<T> prev = list;
+        SimpleLinkedList<T> current = prev.next();
         while (current != null) {
             prev.setNext(prevPrev);
             prevPrev = prev;

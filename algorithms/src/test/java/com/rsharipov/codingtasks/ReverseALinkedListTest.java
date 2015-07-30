@@ -18,8 +18,8 @@ import org.junit.runners.Parameterized.Parameters;
 public class ReverseALinkedListTest {
     
     @FunctionalInterface
-    public interface Reverser<T> {
-        SimpleLinkedList<T> reverse(SimpleLinkedList<T> input);
+    public interface Reverser {
+        SimpleLinkedList<String> reverse(SimpleLinkedList<String> input);
     }
     
     private final Reverser reverser;
