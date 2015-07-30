@@ -8,6 +8,7 @@ public class BinaryTreeNode <T> {
     private final BinaryTreeNode<T> left;
     private final BinaryTreeNode<T> right;
     private final int height;
+    private final int size;
     
     public BinaryTreeNode(T data, BinaryTreeNode<T> left, BinaryTreeNode<T> right) {
         this.data = data;
@@ -16,6 +17,7 @@ public class BinaryTreeNode <T> {
         this.height = 1 + Math.max(
             left == null ? 0 : left.height,
             right == null ? 0 : right.height);
+        this.size = 1 + (left == null ? 0 : left.size) + (right == null ? 0 : right.size);
     }
 
     BinaryTreeNode(T data) {
@@ -24,6 +26,10 @@ public class BinaryTreeNode <T> {
     
     public int height() {
         return height;
+    }
+    
+    public int size() {
+        return size;
     }
     
     public boolean balanced() {

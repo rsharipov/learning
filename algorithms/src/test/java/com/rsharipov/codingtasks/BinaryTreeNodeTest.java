@@ -98,6 +98,25 @@ public class BinaryTreeNodeTest {
                 new BinaryTreeNode("D"), 
                 new BinaryTreeNode("E"))).balanced());
     }
+    
+    @Test
+    public void testSizeOfOneElementTreeIsOne() {
+        assertEquals(1, new BinaryTreeNode("A", null, null).size());
+    }
+
+    @Test
+    public void testSizeOfTwoElementTreeIsTwo() {
+        assertEquals(2, new BinaryTreeNode("A", new BinaryTreeNode("B"), null).size());
+    }
+    
+    @Test
+    public void testSizeOfFiveElementsTreeIsFive() {
+        assertEquals(5, new BinaryTreeNode("A", 
+            new BinaryTreeNode("B"), 
+            new BinaryTreeNode("C", 
+                new BinaryTreeNode("D"), 
+                new BinaryTreeNode("E"))).size());
+    }
 
 
 }
