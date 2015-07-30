@@ -26,6 +26,12 @@ public class BinaryHeap<T> {
             this.data = data;
             this.handle = handle;
         }
+
+        @Override
+        public String toString() {
+            return "DataAndHandle{" + "data=" + data + ", handle=" + handle + '}';
+        }
+        
     }
     
     public boolean isEmpty() {
@@ -50,14 +56,17 @@ public class BinaryHeap<T> {
     }
     
     public Handle add(T item) {
-        Handle handle = new Handle(list.size() - 1);
+        Handle handle = new Handle(list.size());
         list.add(new DataAndHandle<>(item, handle));
         pullUp(list.size() - 1);
+        System.out.println(list);
         return handle;
     }   
     
     public void update(Handle handle) {
         moveIfNecessary(handle.position);
+        System.out.println("Updating");
+        System.out.println(list);
     }
     
     private void pushDown(int index) {
