@@ -9,6 +9,10 @@ public class Interval {
         this.left = left;
         this.right = right;
     }
+    
+    public boolean overlaps(Interval another) {
+        return Math.max(left, another.left) <= Math.min(right, another.right);
+    }
 
     @Override
     public boolean equals(Object obj) {
