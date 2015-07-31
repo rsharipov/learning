@@ -3,7 +3,7 @@ package com.rsharipov;
 import java.util.Objects;
 
 public class SimpleLinkedList<T> {
-    private T data;
+    private final T data;
     private SimpleLinkedList<T> next;
     
     public SimpleLinkedList(T data, SimpleLinkedList<T> next) {    

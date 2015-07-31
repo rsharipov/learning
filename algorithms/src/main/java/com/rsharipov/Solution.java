@@ -7,6 +7,8 @@ import java.io.InputStream;
 import java.math.BigInteger;
 import java.util.Scanner;
 
+// TODO: Actually solve this by using Aho-Corasick algorithm
+
 public class Solution {
     
     private static String[] powers;

@@ -1,4 +1,4 @@
-package com.rsharipov.tasks.hackerrank;
+package com.rsharipov.tasks.hackerrank.projecteuler;
 
 import java.math.BigInteger;
 import java.util.Scanner;

@@ -1,5 +1,6 @@
 package com.rsharipov.tasks.hackerrank;
 
+import com.rsharipov.tasks.hackerrank.projecteuler.Task027;
 import java.util.Arrays;
 import org.junit.Test;
 import static org.junit.Assert.*;

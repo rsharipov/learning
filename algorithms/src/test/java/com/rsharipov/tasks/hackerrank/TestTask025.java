@@ -1,5 +1,6 @@
 package com.rsharipov.tasks.hackerrank;
 
+import com.rsharipov.tasks.hackerrank.projecteuler.task025;
 import static org.hamcrest.Matchers.lessThan;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;

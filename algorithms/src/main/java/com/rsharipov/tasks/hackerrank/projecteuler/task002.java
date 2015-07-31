@@ -1,3 +1,5 @@
+package com.rsharipov.tasks.hackerrank.projecteuler;
+
 import java.io.*;
 import java.util.*;
 import java.text.*;

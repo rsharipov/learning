@@ -1,6 +1,7 @@
 package com.rsharipov.tasks.hackerrank;
 
 
+import com.rsharipov.tasks.hackerrank.projecteuler.task021;
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
