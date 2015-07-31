@@ -65,7 +65,6 @@ public class MergeSortTest {
     @Test
     public void testTimeOrderOfGrowth() {
         PolynomialTimeEstimater estimater = new PolynomialTimeEstimater(100000);
-        System.out.println(estimater.estimateHigherOrderMemberDegree(this::timeToSort));
         assertThat(estimater.estimateHigherOrderMemberDegree(this::timeToSort),
             lessThan(2.0));
     }
