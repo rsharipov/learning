@@ -2,7 +2,9 @@ package com.rsharipov;
 
 
 import com.rsharipov.BinaryTreeNode;
+import com.rsharipov.codingtasks.FindTheKthLargestElementInBst;
 import java.util.Arrays;
+import java.util.List;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -155,6 +157,27 @@ public class BinaryTreeNodeTest {
             );
         assertEquals(expected, actual);
     }
+        
+    @Test
+    public void testFindingKthGreatestElementInBstWorksCorrectly() {
+        List<Integer> ints = Arrays.asList(1, 2, 3, 4, 6);
+        BinaryTreeNode<Integer> tree = BinaryTreeNode.buildStaticBstFrom(ints, null);
+        FindTheKthLargestElementInBst finder = new FindTheKthLargestElementInBst();        
+        assertEquals(6, (int)finder.find(tree, 0));
+        assertEquals(4, (int)finder.find(tree, 1));
+        assertEquals(3, (int)finder.find(tree, 2));
+        assertEquals(2, (int)finder.find(tree, 3));
+        assertEquals(1, (int)finder.find(tree, 4));
+        assertNull(finder.find(tree, 5));
+    }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void testFindingKthGreatestElementInBstThrowsOnNegativeK() {
+        List<Integer> ints = Arrays.asList(1, 2, 3, 4, 6);
+        BinaryTreeNode<Integer> tree = BinaryTreeNode.buildStaticBstFrom(ints, null);
+        FindTheKthLargestElementInBst finder = new FindTheKthLargestElementInBst();        
+        finder.find(tree, -1);
+    }
 
 }
+
