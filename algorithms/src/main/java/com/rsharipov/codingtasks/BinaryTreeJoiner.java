@@ -1,5 +1,7 @@
 package com.rsharipov.codingtasks;
 
+import com.rsharipov.BinaryTreeNode;
+
 public class BinaryTreeJoiner {
 
     public final <T> String joinBinaryTree(BinaryTreeNode<T> root) {

@@ -1,4 +1,8 @@
-package com.rsharipov.codingtasks;
+package com.rsharipov;
+
+
+import com.rsharipov.BinaryTreeNode;
+import java.util.Arrays;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -116,6 +120,40 @@ public class BinaryTreeNodeTest {
             new BinaryTreeNode<>("C", 
                 new BinaryTreeNode<>("D"), 
                 new BinaryTreeNode<>("E"))).size());
+    }
+    
+    @Test
+    public void testStaticBstIsGettingBuiltCorrectly() {
+        BinaryTreeNode<Integer> actual = BinaryTreeNode.buildStaticBstFrom(Arrays.asList(2, 6, 4, 2, 3, 3, 1), null);
+        BinaryTreeNode<Integer> expected =
+            new BinaryTreeNode<>(3,
+                new BinaryTreeNode<>(2,
+                    new BinaryTreeNode<>(1),
+                    new BinaryTreeNode<>(2)
+                ),
+                new BinaryTreeNode<>(4,
+                    new BinaryTreeNode<>(3),
+                    new BinaryTreeNode<>(6)
+                )
+            );
+        assertEquals(expected, actual);
+    }
+    
+    @Test
+    public void testStaticBstIsGettingBuiltCorrectlyWhenNotAllLevelsAreFull() {
+        BinaryTreeNode<Integer> actual = BinaryTreeNode.buildStaticBstFrom(Arrays.asList(2, 3, 1, 4, 6), null);
+        BinaryTreeNode<Integer> expected =
+            new BinaryTreeNode<>(3,
+                new BinaryTreeNode<>(2,
+                    new BinaryTreeNode<>(1),
+                    null
+                ),
+                new BinaryTreeNode<>(6,
+                    new BinaryTreeNode<>(4),
+                    null
+                )
+            );
+        assertEquals(expected, actual);
     }
 
 

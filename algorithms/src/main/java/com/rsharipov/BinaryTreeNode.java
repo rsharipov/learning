@@ -1,5 +1,7 @@
-package com.rsharipov.codingtasks;
+package com.rsharipov;
 
+import java.util.Comparator;
+import java.util.List;
 import java.util.Objects;
 
 public class BinaryTreeNode <T> {
@@ -20,8 +22,23 @@ public class BinaryTreeNode <T> {
         this.size = 1 + (left == null ? 0 : left.size) + (right == null ? 0 : right.size);
     }
 
-    BinaryTreeNode(T data) {
+    public static <T> BinaryTreeNode<T> buildStaticBstFrom(List<T> list, 
+            Comparator<T> comparator) {
+        list.sort(comparator);
+        return buildStaticBstFrom(list, 0, list.size());
+    }
+    
+    public BinaryTreeNode(T data) {
         this(data, null, null);
+    }
+
+    @Override
+    public String toString() {
+        return data.toString() + "(" +
+            (left == null ? "" : left.toString()) +
+            ", " +
+            (right == null ? "" : right.toString()) +
+            ")";
     }
     
     public int height() {
@@ -72,5 +89,14 @@ public class BinaryTreeNode <T> {
     
     public T data() {
         return data;
+    }
+    
+    private static <T> BinaryTreeNode<T> buildStaticBstFrom(
+        List<T> list, int startIncl, int endExcl) {
+        if (startIncl == endExcl) return null;
+        int mid = (startIncl + endExcl) / 2;
+        return new BinaryTreeNode<>(list.get(mid),
+            buildStaticBstFrom(list, startIncl, mid),
+            buildStaticBstFrom(list, mid + 1, endExcl));
     }
 }

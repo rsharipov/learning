@@ -1,5 +1,7 @@
 package com.rsharipov.codingtasks;
 
+import com.rsharipov.BinaryTreeNode;
+
 public class ReverseABinaryTree {
 
     public <T> BinaryTreeNode<T> reverse(BinaryTreeNode<T> root) {
