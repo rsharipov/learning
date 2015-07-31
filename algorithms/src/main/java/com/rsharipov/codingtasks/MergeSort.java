@@ -5,12 +5,6 @@ import java.util.Comparator;
 
 public class MergeSort {
     
-    public static class StdComparator<T extends Comparable<T>> implements Comparator<T> {
-        @Override
-        public int compare(T o1, T o2) {
-            return o1.compareTo(o2);
-        }        
-    }
     
     public <T extends Comparable<T>> SimpleLinkedList<T> sort(SimpleLinkedList<T> list) {
         return sort(list, new StdComparator<T>());
