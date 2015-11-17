@@ -89,16 +89,16 @@ class SolutionSpec extends FlatSpec with Matchers {
 	      getClass().getResourceAsStream("output.txt")).getLines().mkString(System.lineSeparator()) + System.lineSeparator())
 	}
 	
-//	it should "run in less than 7 seconds" in {
-//	  import TimeUnit._
-//		
-//		shouldRunIn (7, SECONDS) {
-//			val output = new ByteArrayOutputStream()
-//			val input = getClass().getResourceAsStream("input_slow.txt");
-//			input should not be null
-//			Solution.solve(input, output)			
-//		}
-//	}
+	it should "run in less than 7 seconds" in {
+	  import TimeUnit._
+		
+		shouldRunIn (7, SECONDS) {
+			val output = new ByteArrayOutputStream()
+			val input = getClass().getResourceAsStream("input_slow.txt");
+			input should not be null
+			Solution.solve(input, output)			
+		}
+	}
 	
 	"Factorization" should "factorize a number correctly" in {
 	  Factorization.factorize(630) shouldEqual List((2, 1), (3, 2), (5, 1), (7, 1))

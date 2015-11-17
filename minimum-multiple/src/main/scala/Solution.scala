@@ -144,7 +144,10 @@ class LCMTree(_data: Array[Int]) {
       case Leaf(multiple) => multiple
       case Tree(leftTree, rightTree) =>
         val mid = (left + right) / 2
-        if (rightReq <= mid) {
+        if (left == leftReq && right == rightReq) {
+          tree.multiple
+        }
+        else if (rightReq <= mid) {
           query(leftTree, left, mid, leftReq, rightReq)
         } else if (mid + 1 <= leftReq) {
           query(rightTree, mid + 1, right, leftReq, rightReq)
