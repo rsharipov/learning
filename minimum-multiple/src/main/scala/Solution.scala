@@ -39,8 +39,7 @@ class Factorization private (private val factors: List[(Int, Int)]) {
       merge(left, right.tail, right.head :: accumulator, degreeMerger)
     } else if (right.isEmpty) {
       merge(left.tail, right, left.head :: accumulator, degreeMerger)
-    }
-    else {
+    } else {
       val leftHead :: leftTail = left
       val rightHead :: rightTail = right
       if (leftHead._1 < rightHead._1) {
@@ -59,36 +58,43 @@ object Factorization {
     new Factorization(n)
   }
   // Imperative for simplicity's and performance's sake
-  def factorize(n: Int) = {
-    import scala.collection.JavaConversions._
-    var r = n
-    val factors = new ArrayList[(Int, Int)]()
-    var i = 2
-    while (i <= r) {
-      if (r % i == 0) {
-        var count = 0
-        while (r % i == 0) {
-          r /= i
-          count += 1
+  def factorize(n: Int): List[(Int, Int)] = {
+    val cache = new HashMap[Int, List[(Int, Int)]]()
+    val cached = cache.get(n)
+    if (cached.isDefined) {
+      cached.get
+    } else {
+      import scala.collection.JavaConversions._
+      var r = n
+      val factors = new ArrayList[(Int, Int)]()
+      var i = 2
+      while (i <= r) {
+        if (r % i == 0) {
+          var count = 0
+          while (r % i == 0) {
+            r /= i
+            count += 1
+          }
+          factors.add((i, count))
         }
-        factors.add((i, count))
+        i += 1
       }
-      i += 1
+      val list = factors.toList
+      cache.put(n, list)
+      list
     }
-    factors.toList
   }
   def powMod(number: Int, degree: Int, modulo: Int): Int = {
-    def powMod(number: Int, degree: Int, modulo: Int, result: Int): Int = {
+    @tailrec
+    def powMod(number: Long, degree: Int, modulo: Long, result: Long): Long = {
       if (degree == 0) result
       else if (degree % 2 == 1) {
-        powMod((number.asInstanceOf[Long] * number % modulo).asInstanceOf[Int], 
-            degree / 2, modulo, (result.asInstanceOf[Long] * number % modulo).asInstanceOf[Int])
+        powMod(number * number % modulo, degree / 2, modulo, result * number % modulo)
       } else {
-        powMod((number.asInstanceOf[Long] * number % modulo).asInstanceOf[Int], 
-            degree / 2, modulo, result)
+        powMod(number * number % modulo, degree / 2, modulo, result)
       }
     }
-    powMod(number, degree, modulo, 1)
+    powMod(number, degree, modulo, 1).toInt
   }
 }
 
@@ -99,6 +105,10 @@ case class Leaf(multiple: Factorization) extends Node
 case class Tree(left: Node, right: Node) extends Node {
   val multiple = left.multiple lcm right.multiple
 }
+
+abstract class Request
+case class Query(left: Int, right: Int) extends Request
+case class Update(index: Int, value: Int) extends Request
 
 class LCMTree(_data: Array[Int]) {
   val MODULO = 1000000007
@@ -120,11 +130,9 @@ class LCMTree(_data: Array[Int]) {
       case Tree(leftTree, rightTree) =>
         val mid = (left + right) / 2
         if (index <= mid) {
-          val oldValue = leftTree.multiple
           val newLeftTree = updateTree(leftTree, left, mid, index, value)
           Tree(newLeftTree, rightTree)
         } else {
-          val oldValue = rightTree.multiple
           val newRightTree = updateTree(rightTree, mid + 1, right, index, value)
           Tree(leftTree, newRightTree)
         }
