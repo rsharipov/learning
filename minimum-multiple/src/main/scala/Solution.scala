@@ -7,6 +7,7 @@ import java.io.OutputStream
 import java.io.PrintStream
 import scala.annotation.tailrec
 import java.util.ArrayList
+import scala.collection.mutable.HashMap
 
 class Factorization private (private val factors: List[(Int, Int)]) {
   private def this(n: Int) = {
@@ -26,7 +27,7 @@ class Factorization private (private val factors: List[(Int, Int)]) {
     }
   }
   def toInt(modulo: Int) = {
-    factors.foldRight(1L)((value, acc) => 
+    factors.foldRight(1L)((value, acc) =>
       (acc * Factorization.powMod(value._1, value._2, modulo) % modulo)).toInt
   }
   @tailrec
