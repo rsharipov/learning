@@ -1,14 +1,17 @@
 import org.scalatest.Matchers
+import TimedMatcher._
 import org.scalatest.FlatSpec
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
+import java.util.concurrent.TimeUnit
+import org.scalatest.exceptions.TestFailedException
 
 class SolutionSpec extends FlatSpec with Matchers {
 
 
 	"Solution" should "return expected values for queries" in {
-		val solution = new Solution.Processor(Array(1, 2, 3, 4, 5, 6, 7))
-		def For(left: Int, right: Int): BigInt = solution.query(left, right)
+		val lcmTree = new LCMTree(Array(1, 2, 3, 4, 5, 6, 7))
+		def For(left: Int, right: Int): BigInt = lcmTree.query(left, right)
 	
 		For(0, 0) shouldBe 1
 		For(0, 1) shouldBe 2
@@ -25,10 +28,10 @@ class SolutionSpec extends FlatSpec with Matchers {
 	}
 
 	it should "return expected values for queries after update" in {
-		val solution = new Solution.Processor(Array(1, 2, 3, 4, 5, 6, 7))
-		def For(left: Int, right: Int): BigInt = solution.query(left, right)
+		val lcmTree = new LCMTree(Array(1, 2, 3, 4, 5, 6, 7))
+		def For(left: Int, right: Int): BigInt = lcmTree.query(left, right)
 
-		solution.update(1, 7)
+		lcmTree.update(1, 7)
 
 		For(0, 0) shouldBe 1
 		For(0, 1) shouldBe 14
@@ -41,11 +44,11 @@ class SolutionSpec extends FlatSpec with Matchers {
 	}
 	
 	it should "return expected values for queries after several updates" in {
-		val solution = new Solution.Processor(Array(1, 2, 3, 4, 5, 6, 7))
-		def For(left: Int, right: Int): BigInt = solution.query(left, right)
+		val lcmTree = new LCMTree(Array(1, 2, 3, 4, 5, 6, 7))
+		def For(left: Int, right: Int): BigInt = lcmTree.query(left, right)
 
-		solution.update(2, 3)
-		solution.update(4, 7)
+		lcmTree.update(2, 3)
+		lcmTree.update(4, 7)
 
 		// 1 2 9 4 35 6 7
 		
@@ -78,24 +81,44 @@ class SolutionSpec extends FlatSpec with Matchers {
 		output.toString shouldBe "90\n30\n9\n18\n24\n".replaceAll("\n", System.lineSeparator())
 	}
 	
-	it should "run in less than 7 seconds" in {
-		case class seconds(value: Int)
-		class TimedRunner(action: => Unit) {
-			def in(secs: seconds) {
-				val start = System.nanoTime
-				action
-				val end = System.nanoTime
-				(((end - start) / 1000000000).toInt) should be < secs.value
-			}
-		}
-		def shouldRun (action: => Unit) = {
-			new TimedRunner(action)
-		}
-		
-		shouldRun {
-			val output = new ByteArrayOutputStream()
-			Solution.solve(getClass().getResourceAsStream("input.txt"), output)			
-		} in seconds(7)
+	it should "solve for bigger input correctly" in {
+		val input = getClass().getResourceAsStream("input.txt");
+		val output = new ByteArrayOutputStream()
+		Solution.solve(input, output)
+		output.toString shouldBe (scala.io.Source.fromInputStream(
+	      getClass().getResourceAsStream("output.txt")).getLines().mkString(System.lineSeparator()) + System.lineSeparator())
 	}
-
+	
+//	it should "run in less than 7 seconds" in {
+//	  import TimeUnit._
+//		
+//		shouldRunIn (7, SECONDS) {
+//			val output = new ByteArrayOutputStream()
+//			val input = getClass().getResourceAsStream("input_slow.txt");
+//			input should not be null
+//			Solution.solve(input, output)			
+//		}
+//	}
+	
+	"Factorization" should "factorize a number correctly" in {
+	  Factorization.factorize(630) shouldEqual List((2, 1), (3, 2), (5, 1), (7, 1))
+	}
+	
+	it should "merge to lcm correctly" in {
+	  Factorization(250) lcm Factorization(90) shouldEqual Factorization(2250)
+	}
+	
+	it should "power by modulo correctly" in {
+		Factorization.powMod(1, 4, 50) shouldEqual 1
+		Factorization.powMod(2, 4, 2) shouldEqual 0
+	  Factorization.powMod(2, 5, 17) shouldEqual 15
+	  Factorization.powMod(3, 4, 50) shouldEqual 31
+	  Factorization.powMod(3, 5, 50) shouldEqual 43
+	  Factorization.powMod(2, 40, 1000000009) shouldEqual 511617885
+	}
+	
+	it should "toInt correctly" in {
+	  val lcm = Factorization(511617885) lcm Factorization(37)
+	  lcm.toInt(1000000009) shouldEqual 929861583
+	}
 }

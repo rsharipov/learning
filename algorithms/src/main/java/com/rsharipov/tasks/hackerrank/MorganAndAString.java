@@ -20,13 +20,34 @@ public class MorganAndAString {
                 StringBuilder builder = new StringBuilder();
                 int i = 0;
                 int j = 0;
+                StringBuilder result = new StringBuilder();
                 while (i < first.length() && j < second.length()) {
-                    if (array.rank(i) < array.rank(first.length() + 1 + j)) {
-                        builder.append(first.charAt(i));
+                    int commonLength = array.lcp(i, first.length() + 1 + j);
+                    if (commonLength == first.length() - i
+                            && commonLength == second.length() - j) {
+                        result.append(first.charAt(i));
                         ++i;
-                    }
-                    else {
-                        builder.append(second.charAt(j));
+                    } else if (commonLength == first.length() - i) {
+                        if (first.charAt(i) < second.charAt(j + commonLength)) {
+                            result.append(first.charAt(i));
+                            ++i;
+                        } else {
+                            result.append(second.charAt(j));
+                            ++j;
+                        }
+                    } else if (commonLength == second.length() - j) {
+                        if (second.charAt(j) < first.charAt(i + commonLength)) {
+                            result.append(second.charAt(j));
+                            ++j;
+                        } else {
+                            result.append(first.charAt(i));
+                            ++i;
+                        }
+                    } else if (array.rank(i) < array.rank(first.length() + 1 + j)) {
+                        result.append(first.charAt(i));
+                        ++i;
+                    } else {
+                        result.append(second.charAt(j));
                         ++j;
                     }
                 }
@@ -41,7 +62,7 @@ public class MorganAndAString {
             }
         }
     }
-    
+
     public static void main(String[] args) throws IOException {
         solve(System.in, System.out);
     }

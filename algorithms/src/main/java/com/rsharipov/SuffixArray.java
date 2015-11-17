@@ -1,5 +1,6 @@
 package com.rsharipov;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -7,6 +8,7 @@ import java.util.List;
 public class SuffixArray {
 
     private final int[] ranks;
+    private List<int[]> storedRanks;
     private int[] indexes;
     private final String input;
     private List<Integer>[] countingSortBuckets;
@@ -52,6 +54,7 @@ public class SuffixArray {
         for (int i = 0; i < input.length(); ++i) {
             countingSortBuckets[i] = new LinkedList<>();
         }
+        this.storedRanks = new ArrayList<int[]>();
         this.input = input;
         this.pairs = new RankPairs[input.length()];
         for (int i = 0; i < input.length(); ++i) {
@@ -121,6 +124,7 @@ public class SuffixArray {
                 }
                 currentSI = 1 - currentSI;
                 countingSort(ranks[currentRanks], suffixIndexes[currentSI]);
+                storedRanks.add(Arrays.copyOf(ranks[currentRanks], ranks[currentRanks].length));
             }
             else {
                 for (int i = 0; i < length; ++i) {
@@ -152,6 +156,7 @@ public class SuffixArray {
             }
             maxRank = rank;
             currentRanks = 1 - currentRanks;
+            storedRanks.add(Arrays.copyOf(ranks[currentRanks], ranks[currentRanks].length));
         }
         return ranks[currentRanks];        
     }
@@ -187,4 +192,17 @@ public class SuffixArray {
     public int length() {
         return input.length();
     }
+    
+    public int lcp(int first, int second)
+	{
+		if (first >= length() || second >= length()) return 0;
+		for (int i = storedRanks.size() - 1; i >= 0; --i)
+		{
+			if (storedRanks.get(i)[first] == storedRanks.get(i)[second])
+			{
+				return (1 << i) + lcp(first + (1 << i), second + (1 << i));
+			}
+		}
+		return 0;
+	}
 }
